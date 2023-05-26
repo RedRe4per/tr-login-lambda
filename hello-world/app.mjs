@@ -10,19 +10,29 @@
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  * 
  */
+import { getOtherPathInfo } from './handlers/other.js';
+import { getHelloPathInfo } from './handlers/hello.js';
 
 export const lambdaHandler = async (event, context) => {
     try {
-        return {
-            'statusCode': 200,
-            'headers': {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "Content-Type",
-                "Access-Control-Allow-Methods": "OPTIONS,GET,POST,PATCH,DELETE,PUT"
-            },
-            'body': JSON.stringify({
-                message: 'hello world 1111111111111112123',
-            })
+        const { path } = event;
+        
+        if (path === '/hello') {
+            return await getHelloPathInfo(event, context);
+        } else if (path === '/other') {
+            return await getOtherPathInfo(event, context);
+        } else {
+            return {
+                'statusCode': 404,
+                'headers': {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Headers": "Content-Type",
+                    "Access-Control-Allow-Methods": "OPTIONS,GET,POST,PATCH,DELETE,PUT"
+                },
+                'body': JSON.stringify({
+                    message: 'Not found',
+                })
+            };
         }
     } catch (err) {
         console.log(err);
