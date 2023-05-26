@@ -21,7 +21,7 @@ export const lambdaHandler = async (event, context) => {
                 "Access-Control-Allow-Methods": "OPTIONS,GET,POST,PATCH,DELETE,PUT"
             },
             'body': JSON.stringify({
-                message: 'hello world 1111111111111112',
+                message: 'hello world 1111111111111112123',
             })
         }
     } catch (err) {
